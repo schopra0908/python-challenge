@@ -22,10 +22,10 @@ with open(PyBank_file, newline = '') as csvFile:
     header = next(csv_reader)
     #print(header)
 
-    # Metrics on all rows after header
-    for row in csv_reader:
-        #month counts
-        month_count = month_count + 1
+        # Metrics on all rows after header
+        for row in csv_reader:
+            #month counts
+            month_count = month_count + 1
 
         #total amount of variance over entire period
         current_month_variance = int(row[1])
