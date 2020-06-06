@@ -1,42 +1,52 @@
 # Import the necessary dependencies for os.path.join()
 import os
 import csv
-from collections import Counter
+#from collections import Counter
 
 # Read in a .csv file
 PyPoll_file = os.path.join( "election_data.csv")
 
 # Create lists for variables
 voters = []
-voters_percent = []
-candidates = []
-unique_candidates = []
+#voters_percent = []
+#candidates = []
+#unique_candidates = []
+
+# Dictionary Method
+candidates = {}
 
 #after multiple failed attempts with the list
 # or dictionary method, i've resorted to if thens 
-county = []
-khan = []
-correy = []
-li = []
-otooley = []
+#county = []
+#khan = []
+#correy = []
+#li = []
+#otooley = []
 
 # Define Variables
 count = 0
 
 # Open the PyPoll file
 with open(PyPoll_file, newline = '') as csvFile:
-    csv_reader = csv.reader(csvFile, delimiter=',')
+    csv_reader = csv.reader(csvFile)
     #Read header Row
     header = next(csv_reader)
     #print(header)
 
 # Metrics on all rows after header
     for row in csv_reader:
-        #voters in the row
-        voters.append(int(row[0]))
-        candidates.append(row[2])
-        county.append(row[1])
-        
+        # define values
+        #voters.append(int(row[0]))
+        #candidates.append(row[2])
+        #county.append(row[1])
+        votes = row [0]
+        county = row [1]
+        candidate = row[2]
+
+        if candidate not in candidates:
+            candidates[candidate] = len(votes)
+        else:
+            candidates[candidate] += len(votes)
 
 # unique candidates count and totals
     #for all in set(candidates):
@@ -66,32 +76,36 @@ with open(PyPoll_file, newline = '') as csvFile:
 #print(sorted(lst2)[0])
 
 # vote count - attempt #12312 (len = # items in list)
-total_votes = (len(voters))
+
+total_votes = len(list(csv.reader(open('election_data.csv'))))-1
 
 # votes per candidate
-for candidate in candidates:
-    if candidate == "khan":
-        khan.append(candidates)
-        khan_total = len(khan)
-    elif candidate == "correy":
-        correy.append(candidates)
-        correy_total = len(correy)
-    elif candidate == "li":
-        li.append(candidates)
-        li_total = len(li)
-    else:
-        otooley.append(candidates)
-        otooley_total = len(otooley)
+#for candidate in candidates:
+    #if candidate == "khan":
+        #khan.append(candidates)
+        #khan_total = len(khan)
+    #elif candidate == "correy":
+        #correy.append(candidates)
+        #correy_total = len(correy)
+    #elif candidate == "li":
+        #li.append(candidates)
+        #li_total = len(li)
+    #else:
+        #otooley.append(candidates)
+        #otooley_total = len(otooley)
 
 # calculate percentages
-    khan_per = round(((khan_total / total_votes)*100),2)
-    correy_per = round(((correy_total / total_votes)*100),2)
-    li_per = round(((li_total / total_votes)*100),2)
-    otooley_per = round(((otooley_total / total_votes)*100),2)
+    #khan_per = round(((khan_total / total_votes)*100),2)
+    #correy_per = round(((correy_total / total_votes)*100),2)
+    #li_per = round(((li_total / total_votes)*100),2)
+    #otooley_per = round(((otooley_total / total_votes)*100),2)
 
 print("-------------------------")
 print("Election Results")   
 print("-------------------------")
-print("Total Votes :" + str(count))    
+print(f"Total Votes : {total_votes}")   
 print("-------------------------")
-print(f"Khan: {khan_per}% ({khan_total})")
+
+for candidate_name, count in candidates.items():
+    #count_percent = ((count)/(total_votes))
+    print(f"{candidate_name} : % ({count})")
